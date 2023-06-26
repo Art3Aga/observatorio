@@ -13,6 +13,8 @@ export class GraficaComponent implements OnInit {
   @Input() dataSensores: any[] = [];
   @Input() width: string = '500';
   @Input() height: string = '200';
+  @Input() id: string = 'chart-1';
+
   humedades: any[] = [];
   temperaturas: any[] = [];
   vientos: any[] = [];

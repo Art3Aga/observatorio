@@ -20,7 +20,7 @@
   <mat-tab label="Gráficos">
     <br>
     <h2>Gráfica en tiempo real</h2>
-    <app-grafica [dataSensores]="dataSensores.reverse()" *ngIf="dataSensores.length > 0"></app-grafica>
+    <app-grafica [id]="'chart-1'" [dataSensores]="dataSensores.reverse()" *ngIf="dataSensores.length > 0"></app-grafica>
     <br><br>
 
     <br>
@@ -94,7 +94,9 @@
     <br><br>
 
     <div class="graficas">
-      <app-grafica [dataSensores]="initialData.concat(endData)" *ngIf="initialData.length > 0 && endData.length > 0"></app-grafica>
+
+      <app-grafica [id]="'chart-2'" [dataSensores]="dataResult" *ngIf="dataResult.length > 0"></app-grafica>
+      <!-- <app-grafica [id]="'chart-1'" [dataSensores]="dataSensores.reverse()" *ngIf="dataSensores.length > 0"></app-grafica> -->
     </div>
 
     <br><br>

@@ -5,4 +5,6 @@ export interface DataSensor {
   luz: number;
   viento: number;
   fecha: any;
+  lluvia: number;
+  co2: number;
 }

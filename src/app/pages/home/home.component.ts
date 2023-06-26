@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   endData: any[] = [];
 
 
-  dataResult: any[] = [];
+  dataResult: DataSensor[] = [];
 
   constructor(private dataService: DataService, public dialog: MatDialog) { }
 
@@ -116,15 +116,53 @@ export class HomeComponent implements OnInit {
         this.dataService.filterByDate(start, end).subscribe((data) => {
           data.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
           this.initialData = data;
+          // console.log(data);
+
           this.dataService.filterByDate(dateStart, dateEnd).subscribe((data) => {
             data.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
             this.endData = data;
-            this.dataResult = this.initialData.concat(this.endData);
+            this.dataResult = this.initialData.concat(this.endData).reverse();
           });
         });
 
       }
     }
+
+    if (this.initialDate && this.endDate) {
+
+
+      // fecha inicial
+      const initialFechaInicio = `${this.initialDate.getFullYear()}-${this.initialDate.getMonth() + 1}-${this.initialDate.getDate()} 00:00:00`;
+      const initialFechaFin = `${this.initialDate.getFullYear()}-${this.initialDate.getMonth() + 1}-${this.initialDate.getDate()} 23:59:59`;
+
+      const start = new Date(initialFechaInicio);
+      const end = new Date(initialFechaFin);
+
+
+      //fecha final
+      const endFechaInicio = `${this.endDate.getFullYear()}-${this.endDate.getMonth() + 1}-${this.endDate.getDate()} 00:00:00`;
+      const endFechaFin = `${this.endDate.getFullYear()}-${this.endDate.getMonth() + 1}-${this.endDate.getDate()} 23:59:59`;
+
+      const dateStart = new Date(endFechaInicio);
+      const dateEnd = new Date(endFechaFin);
+
+
+      this.dataService.filterByDate(start, end).subscribe((data) => {
+        data.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
+        this.initialData = data.reverse();
+        this.dataService.filterByDate(dateStart, dateEnd).subscribe((data) => {
+          data.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
+          this.endData = data.reverse();
+          this.dataResult = this.initialData.concat(this.endData);
+        });
+      });
+    }
+
+
+    if (!this.initialDate && !this.endDate && !this.initialTime && !this.endTime) {
+      alert('Faltan Datos');
+    }
+
   }
 
 
