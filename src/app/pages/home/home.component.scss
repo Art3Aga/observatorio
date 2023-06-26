@@ -1,0 +1,41 @@
+::ng-deep {
+  .mat-tab-labels {
+    justify-content: center;
+  }
+}
+
+
+.alarms {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 50%;
+  height: 400px;
+  flex-direction: column;
+  row-gap: 30px;
+
+  .inputs {
+    display: flex;
+    gap: 50px;
+  }
+}
+
+
+.dates {
+  display: flex;
+  flex-direction: column;
+  .date {
+    display: flex;
+    gap: 30px;
+  }
+  button {
+    width: 10%;
+  }
+}
+
+
+.graficas {
+  // display: flex;
+  // justify-content: space-between;
+}

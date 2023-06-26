@@ -1,0 +1,140 @@
+<!-- <div class="layout">
+  <div class="table" *ngIf="dataSensores.length > 0">
+    <button mat-raised-button color="primary" [routerLink]="['/filtro']">
+      Filtrar
+    </button>
+    <button
+      mat-icon-button
+      color="primary"
+      [disabled]="dataSensores.length == 0"
+    >
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <app-tabla-datos [dataSensores]="dataSensores" [showFilter]="true"></app-tabla-datos>
+  </div>
+</div>-->
+
+
+
+<mat-tab-group>
+  <mat-tab label="Gráficos">
+    <br>
+    <h2>Gráfica en tiempo real</h2>
+    <app-grafica [dataSensores]="dataSensores.reverse()" *ngIf="dataSensores.length > 0"></app-grafica>
+    <br><br>
+
+    <br>
+    <h2>Gráfica Comparativa</h2>
+    <div class="dates">
+
+      <!--Fecha Inicial-->
+      <div class="date">
+        <mat-form-field>
+          <mat-label>Fecha Inicial</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="initialDate"/>
+
+          <button
+            *ngIf="initialDate"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="clearFilter()"
+          >
+            <mat-icon color="accent">close</mat-icon>
+          </button>
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Hora Formato 24h (ej 18:00)</mat-label>
+          <input type="time" matInput [(ngModel)]="initialTime"
+          />
+        </mat-form-field>
+
+      </div>
+
+      <!--Fecha Final-->
+      <div class="date">
+        <mat-form-field>
+          <mat-label>Fecha Final</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            [(ngModel)]="endDate"
+            />
+
+          <button
+            *ngIf="endDate"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="clearFilter()"
+          >
+            <mat-icon color="accent">close</mat-icon>
+          </button>
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Hora Formato 24h (ej 18:00)</mat-label>
+          <input type="time" matInput [(ngModel)]="endTime" />
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="filterByDate()">Comparar</button>
+
+    </div>
+    <br><br>
+
+    <div class="graficas">
+      <app-grafica [dataSensores]="initialData.concat(endData)" *ngIf="initialData.length > 0 && endData.length > 0"></app-grafica>
+    </div>
+
+    <br><br>
+
+  </mat-tab>
+  <mat-tab label="Informes">
+    <app-tabla-datos [dataSensores]="dataSensores" [showFilter]="true"></app-tabla-datos>
+  </mat-tab>
+  <!-- <mat-tab label="Alarma">
+    <div class="alarms">
+
+      <div class="temp">
+        <h3>¿Qué temperatura máxima es necesaria para activar la alarma?</h3>
+        <div class="inputs">
+          <mat-form-field>
+            <mat-label>Temperatura</mat-label>
+            <input type="number" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="temp">
+        <h3>¿Qué cantidad de CO2 desea para activar la alarma de incendio?</h3>
+        <div class="inputs">
+          <mat-form-field>
+            <mat-label>CO2</mat-label>
+            <input type="number" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="lluvia">
+        <mat-slide-toggle>Notificar si llueve</mat-slide-toggle>
+      </div>
+
+
+    </div>
+  </mat-tab> -->
+</mat-tab-group>
+
+<!-- <mat-spinner *ngIf="dataSensores.length == 0"></mat-spinner> -->
