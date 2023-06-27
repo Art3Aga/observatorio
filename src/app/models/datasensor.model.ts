@@ -1,10 +1,10 @@
 export interface DataSensor {
-  humedad: number;
-  temperatura: number;
-  presion: number;
-  luz: number;
-  viento: number;
+  humedad: any;
+  temperatura: any;
+  presion: any;
+  luz: any;
+  viento: any;
   fecha: any;
-  lluvia: number;
-  co2: number;
+  lluvia: any;
+  co2: any;
 }

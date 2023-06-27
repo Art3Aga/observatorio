@@ -37,6 +37,9 @@ export class TablaDatosComponent implements AfterViewInit, OnChanges {
 
   setDataSource() {
     if (this.dataSensores) {
+      // this.dataSensores.map(item => {
+      //   item.temperatura = `${item.temperatura} °C`
+      // })
       this.dataSource = new MatTableDataSource(this.dataSensores);
       this.dataSource.paginator = this.paginator;
     }
