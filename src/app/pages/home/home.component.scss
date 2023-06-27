@@ -2,6 +2,13 @@
   .mat-tab-labels {
     justify-content: center;
   }
+  .mat-tab-label {
+    opacity: 1 !important;
+  }
+  .mat-badge-accent .mat-badge-content {
+    background-color: red !important;
+    border: solid 1px red !important;
+  }
 }
 
 
@@ -25,13 +32,23 @@
 .dates {
   display: flex;
   flex-direction: column;
+
   .date {
     display: flex;
     gap: 30px;
   }
+
   button {
     width: 10%;
   }
+}
+
+.badge-custom {
+  position: relative;
+  top: -10px;
+  left: 22px;
+  z-index: 10;
+
 }
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, DocumentData, Firestore, Timestamp, addDoc, collection, collectionData, doc, docData, orderBy, query, setDoc, where } from '@angular/fire/firestore';
+import { CollectionReference, DocumentData, Firestore, Timestamp, addDoc, collection, collectionData, doc, docData, limit, orderBy, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable, timestamp } from 'rxjs';
 
 @Injectable({
@@ -27,16 +27,16 @@ export class DataService {
   }
 
   addData() {
-    const id = `${new Date().valueOf()}`;
-    const data = {
-      humedad: this.randomData(1000),
-      luz: this.randomData(1000),
-      presion: this.randomData(1000),
-      temperatura: this.randomData(50),
-      viento: this.randomData(100),
-      fecha: Timestamp.now()
-    };
-    return setDoc(doc(this.collection, id), data);
+    // const id = `${new Date().valueOf()}`;
+    // const data = {
+    //   humedad: this.randomData(1000),
+    //   luz: this.randomData(1000),
+    //   presion: this.randomData(1000),
+    //   temperatura: this.randomData(50),
+    //   viento: this.randomData(100),
+    //   fecha: Timestamp.now()
+    // };
+    return setDoc(doc(this.collectionAlarm, 'temperatura'), { valor: this.randomData(50).toString() });
   }
 
 
@@ -44,6 +44,21 @@ export class DataService {
     return collectionData(this.collectionAlarm, { idField: 'id' }) as Observable<any[]>;
     // const docAlarm = doc(this.firestore, `temperatura`);
     // return docData(docAlarm);
+  }
+
+  updateDataAlarm(path: string, valor: any) {
+    const document = doc(this.firestore, `alarma/${path}`);
+    // docData(document, { idField: 'id' }).subscribe(data => console.log(data))
+    updateDoc(document, { valor });
+  }
+
+  getLastDocCreated() {
+    const filter = query(this.collection, orderBy('fecha', 'desc'), limit(1));
+    collectionData(filter).subscribe(data => {
+      this.updateDataAlarm('temperatura', data[0]['temperatura']);
+      this.updateDataAlarm('lluvia', data[0]['lluvia']);
+      this.updateDataAlarm('incendio', data[0]['co']);
+    })
   }
 
 

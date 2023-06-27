@@ -71,43 +71,50 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" tabindex="0">
   <table mat-table [dataSource]="dataSource">
     <!-- Position Column -->
     <ng-container matColumnDef="humedad">
       <th mat-header-cell *matHeaderCellDef>Humedad</th>
-      <td mat-cell *matCellDef="let element">{{ element?.humedad }}</td>
+      <td mat-cell *matCellDef="let element">{{ element?.humedad }} %</td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="temperatura">
       <th mat-header-cell *matHeaderCellDef>Temperatura</th>
-      <td mat-cell *matCellDef="let element">{{ element?.temperatura }}</td>
+      <td mat-cell *matCellDef="let element">{{ element?.temperatura }} °C</td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="presion">
       <th mat-header-cell *matHeaderCellDef>Presion</th>
-      <td mat-cell *matCellDef="let element">{{ element?.presion }}</td>
+      <td mat-cell *matCellDef="let element">{{ element?.presion }} kPa</td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="luz">
       <th mat-header-cell *matHeaderCellDef>Luz</th>
-      <td mat-cell *matCellDef="let element">{{ element?.luz }}</td>
+      <td mat-cell *matCellDef="let element">{{ element?.luz }} Luxes</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="lluvia">
+      <th mat-header-cell *matHeaderCellDef>¿Llueve?</th>
+      <td mat-cell *matCellDef="let element">{{ element?.lluvia }} {{ element?.lluvia <= 600 ? '(Si)' : '(No)' }}</td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="viento">
       <th mat-header-cell *matHeaderCellDef>Viento</th>
-      <td mat-cell *matCellDef="let element">{{ element?.viento }}</td>
+      <td mat-cell *matCellDef="let element">{{ element?.viento }} km/h</td>
     </ng-container>
 
-    <!--
-    <ng-container matColumnDef="temperatura2">
-      <th mat-header-cell *matHeaderCellDef> Temperatura-2 </th>
-      <td mat-cell *matCellDef="let element"> {{element?.field6 }} </td>
-    </ng-container> -->
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="co">
+      <th mat-header-cell *matHeaderCellDef>CO</th>
+      <td mat-cell *matCellDef="let element">{{ element?.co }} CO</td>
+    </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="fecha">
@@ -115,14 +122,15 @@
       <td mat-cell *matCellDef="let element">{{ element.fecha }}</td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
+    [pageSizeOptions]="[10, 20]"
     showFirstLastButtons
     aria-label="Select page of periodic elements"
+    class="mat-paginator-sticky"
   >
   </mat-paginator>
 </div>

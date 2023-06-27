@@ -1,7 +1,16 @@
 table {
   width: 100%;
 }
+.mat-elevation-z8 {
+  overflow: auto;
+  height: 500px;
+}
 
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
 
 .inputs {
   display: flex;

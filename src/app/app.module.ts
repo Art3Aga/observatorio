@@ -26,6 +26,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatBadgeModule } from '@angular/material/badge';
+
 
 
 
@@ -69,6 +71,7 @@ import { AlertComponent } from './components/alert/alert.component';
     MatDialogModule,
     MatSlideToggleModule,
     MatSliderModule,
+    MatBadgeModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],

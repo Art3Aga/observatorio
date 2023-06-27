@@ -21,6 +21,7 @@ export class GraficaComponent implements OnInit {
   presiones: any[] = [];
   luces: any[] = [];
   fechas: any[] = [];
+  lluvias: any[] = [];
   monoxidos: any[] = [];
 
   chartData: ChartDataSets[] = [];
@@ -61,15 +62,17 @@ export class GraficaComponent implements OnInit {
     this.presiones = this.dataSensores.map(data => (data.presion));
     this.fechas = this.dataSensores.map(data => data.fecha);
     this.monoxidos = this.dataSensores.map(data => data.co);
+    this.lluvias = this.dataSensores.map(data => data.lluvia);
 
 
     this.chartData = [
-      { data: this.humedades, label: 'Humedad', fill: false },
-      { data: this.temperaturas, label: 'Temperatura', fill: false },
-      { data: this.vientos, label: 'Viento', fill: false, backgroundColor: '#FCFF33', borderColor: '#FCFF33' },
-      { data: this.presiones, label: 'Presion', backgroundColor: '#49FF33', borderColor: '#49FF33', fill: false },
-      { data: this.luces, label: 'Luz', fill: false, backgroundColor: '#B533FF', borderColor: '#B533FF' },
-      { data: this.monoxidos, label: 'Co', fill: false, backgroundColor: '#FE6DFA', borderColor: '#FE6DFA' }
+      { data: this.humedades, label: 'Humedad (%)', fill: false },
+      { data: this.temperaturas, label: 'Temperatura (°C)', fill: false },
+      { data: this.vientos, label: 'Viento (Km/h)', fill: false, backgroundColor: '#FCFF33', borderColor: '#FCFF33' },
+      { data: this.presiones, label: 'Presion (kPa)', fill: false, backgroundColor: '#49FF33', borderColor: '#49FF33' },
+      { data: this.luces, label: 'Luz (Lx)', fill: false, backgroundColor: '#B533FF', borderColor: '#B533FF' },
+      { data: this.monoxidos, label: 'Co', fill: false, backgroundColor: '#FE6DFA', borderColor: '#FE6DFA' },
+      { data: this.lluvias, label: 'Lluvia', fill: false, backgroundColor: '#FEBA6D', borderColor: '#FEBA6D' }
     ];
     this.chartLabels = this.fechas;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DataSensor } from 'src/app/models/datasensor.model';
 import { DataService } from 'src/app/services/data.service';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { AlertComponent } from 'src/app/components/alert/alert.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   dataSensores: DataSensor[] = [];
   dataAlarm: any[] = [];
@@ -31,6 +31,9 @@ export class HomeComponent implements OnInit {
 
 
   dataResult: DataSensor[] = [];
+  alarmaTempOpen: boolean = false;
+  alarmaFireOpen: boolean = false;
+  alarmaRainOpen: boolean = false;
 
   constructor(private dataService: DataService, public dialog: MatDialog) { }
 
@@ -38,32 +41,36 @@ export class HomeComponent implements OnInit {
     this.dataService.getData().subscribe(data => {
       this.dataSensores = data;
       this.dataSensores.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
+      this.validateAlarm();
     });
-    this.validateAlarm();
+  }
 
+  ngAfterViewInit(): void {
+    // setTimeout(() => {
+    //   this.addData();
+    // }, 2500);
   }
 
 
   validateAlarm() {
+
+    this.dataService.getLastDocCreated();
+
     this.dataService.getDataAlarm().subscribe(data => {
       this.dataAlarm = data;
       this.alarmIncendio = data[0];
       this.alarmLluvia = data[1];
       this.alarmTemperatura = data[2];
 
-      if (this.alarmTemperatura.valor >= 40) { // cambiar 20 por el valor que el usuario establezca en el input de alarma maximo temperatura
-        this.openDialog(this.alarmTemperatura, 'ALERTA DE TEMPERATURA ALTA', 'temp');
+      if (Number(this.alarmTemperatura.valor) >= 40) {
+        this.openAlarmTemp(this.alarmTemperatura, 'ALERTA DE TEMPERATURA ALTA', this.alarmTemperatura.id);
       }
-
-      if (this.alarmLluvia.valor <= 600) { // de 600 para arriba NO llueve, de 600 para abajo SI llueve, si es 600 SI LLUEVE
-         // LLueve
-         this.openDialog(this.alarmLluvia, 'ALERTA DE LLUVIA', 'rain');
+      if (Number(this.alarmLluvia.valor) <= 600) {
+        this.openAlarmRain(this.alarmLluvia, 'ALERTA DE LLUVIA', this.alarmLluvia.id);
       }
-
-      if (this.alarmIncendio.valor >= 300)  {  // INCENDIO
-        this.openDialog(this.alarmIncendio, 'ALERTA DE INCENDIO, CO2 ALTO', 'fire');
+      if (Number(this.alarmIncendio.valor) >= 300) {
+        this.openAlarmFire(this.alarmIncendio, 'ALERTA DE INCENDIO ¡CO ALTO!', this.alarmIncendio.id);
       }
-
 
     });
   }
@@ -72,16 +79,52 @@ export class HomeComponent implements OnInit {
     this.dataService.addData();
   }
 
-  openDialog(alarmType: any, title: string, animationType: string) {
-    const dialog = this.dialog.open(AlertComponent, {
-      data: {
-        valor: alarmType.valor,
-        title: title,
-        animationType: animationType
-      },
-    });
+  openAlarmTemp(alarmType: any, title: string, animationType: string) {
+    if (!this.alarmaTempOpen) {
+      this.alarmaTempOpen = true;
+      const dialog = this.dialog.open(AlertComponent, {
+        data: {
+          valor: alarmType.valor,
+          title: title,
+          animationType: animationType
+        },
+      });
+      dialog.afterClosed().subscribe(() => {
+        this.alarmaTempOpen = false;
+      })
+    }
+  }
 
-    return dialog;
+  openAlarmRain(alarmType: any, title: string, animationType: string) {
+    if (!this.alarmaRainOpen) {
+      this.alarmaRainOpen = true;
+      const dialog = this.dialog.open(AlertComponent, {
+        data: {
+          valor: alarmType.valor,
+          title: title,
+          animationType: animationType
+        },
+      });
+      dialog.afterClosed().subscribe(() => {
+        this.alarmaRainOpen = false;
+      })
+    }
+  }
+
+  openAlarmFire(alarmType: any, title: string, animationType: string) {
+    if (!this.alarmaFireOpen) {
+      this.alarmaFireOpen = true;
+      const dialog = this.dialog.open(AlertComponent, {
+        data: {
+          valor: alarmType.valor,
+          title: title,
+          animationType: animationType
+        },
+      });
+      dialog.afterClosed().subscribe(() => {
+        this.alarmaFireOpen = false;
+      })
+    }
   }
 
 

@@ -103,9 +103,13 @@
 
   </mat-tab>
   <mat-tab label="Informes">
-    <app-tabla-datos [dataSensores]="dataSensores" [showFilter]="true"></app-tabla-datos>
+    <app-tabla-datos [dataSensores]="dataSensores.reverse()" [showFilter]="true"></app-tabla-datos>
   </mat-tab>
-  <!-- <mat-tab label="Alarma">
+  <!-- <mat-tab>
+    <ng-template mat-tab-label>
+      <span>Alarma</span>
+      <div class="badge-custom" matBadge="1" [matBadgeColor]="'accent'"></div>
+    </ng-template>
     <div class="alarms">
 
       <div class="temp">

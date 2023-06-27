@@ -15,13 +15,13 @@ export class AlertComponent implements OnInit {
   ngOnInit(): void {
 
 
-    if (this.data.animationType == 'fire') {
+    if (this.data.animationType == 'incendio') {
       this.pathGif = '../../../assets/incendio.gif';
     }
-    if (this.data.animationType == 'rain') {
+    if (this.data.animationType == 'lluvia') {
       this.pathGif = '../../../assets/rain.gif';
     }
-    if (this.data.animationType == 'temp') {
+    if (this.data.animationType == 'temperatura') {
       this.pathGif = '../../../assets/termometro.gif';
     }
 

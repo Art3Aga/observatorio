@@ -15,7 +15,7 @@ export class TablaDatosComponent implements AfterViewInit, OnChanges {
 
   filter: string = '';
 
-  displayedColumns: string[] = ['humedad', 'temperatura', 'presion', 'luz', 'viento', 'fecha'];
+  displayedColumns: string[] = ['humedad', 'temperatura', 'presion', 'luz', 'lluvia', 'viento', 'co', 'fecha'];
   dataSource!: MatTableDataSource<any>;
 
   startDate!: Date | null;
