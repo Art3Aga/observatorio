@@ -52,16 +52,16 @@ export class HomeComponent implements OnInit {
       this.alarmTemperatura = data[2];
 
       if (this.alarmTemperatura.valor >= 40) { // cambiar 20 por el valor que el usuario establezca en el input de alarma maximo temperatura
-        this.openDialog(this.alarmTemperatura, 'ALERTA DE TEMPERATURA ALTA', '');
+        this.openDialog(this.alarmTemperatura, 'ALERTA DE TEMPERATURA ALTA', 'temp');
       }
 
-      if (this.alarmLluvia.valor >= 600) { // de 600 para arriba NO llueve, de 600 para abajo SI llueve, si es 600 SI LLUEVE
+      if (this.alarmLluvia.valor <= 600) { // de 600 para arriba NO llueve, de 600 para abajo SI llueve, si es 600 SI LLUEVE
          // LLueve
-         this.openDialog(this.alarmLluvia, 'ALERTA DE LLUVIA', '');
+         this.openDialog(this.alarmLluvia, 'ALERTA DE LLUVIA', 'rain');
       }
 
       if (this.alarmIncendio.valor >= 300)  {  // INCENDIO
-        this.openDialog(this.alarmIncendio, 'ALERTA DE INCENDIO, CO2 ALTO', '');
+        this.openDialog(this.alarmIncendio, 'ALERTA DE INCENDIO, CO2 ALTO', 'fire');
       }
 
 
@@ -115,13 +115,12 @@ export class HomeComponent implements OnInit {
 
         this.dataService.filterByDate(start, end).subscribe((data) => {
           data.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
-          this.initialData = data;
-          // console.log(data);
+          this.initialData = data.reverse();
 
           this.dataService.filterByDate(dateStart, dateEnd).subscribe((data) => {
             data.forEach(item => item.fecha = `${new Date(item.fecha.seconds * 1000).toLocaleDateString()} ${new Date(item.fecha.seconds * 1000).toLocaleTimeString()}`);
-            this.endData = data;
-            this.dataResult = this.initialData.concat(this.endData).reverse();
+            this.endData = data.reverse();
+            this.dataResult = this.initialData.concat(this.endData);
           });
         });
 
